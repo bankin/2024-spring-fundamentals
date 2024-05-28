@@ -18,10 +18,6 @@ public class HomeController {
 
         model.addAttribute("sofiaTemperature", sofiaTemp);
 
-//        ModelAndView mnv = new ModelAndView();
-//        mnv.setViewName("index");
-//        mnv.addObject("sofiaTemperature", sofiaTemp);
-
         return "index";
     }
 }
