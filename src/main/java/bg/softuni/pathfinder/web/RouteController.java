@@ -22,7 +22,7 @@ public class RouteController {
     /**
      * Method to handle the listing of all routes.
      *
-     * @return the list routes view
+     * @return view to list all routes
      */
     @GetMapping("/routes")
     public String routes(Model model) {
