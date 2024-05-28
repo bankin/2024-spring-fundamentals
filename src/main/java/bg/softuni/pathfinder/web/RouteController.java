@@ -22,6 +22,7 @@ public class RouteController {
     /**
      * Method to handle the listing of all routes.
      *
+     * @param model the Model for the view
      * @return the list routes view
      */
     @GetMapping("/routes")
