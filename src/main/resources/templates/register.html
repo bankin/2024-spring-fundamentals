@@ -23,9 +23,9 @@
     <div class="d-flex justify-content-center ">
         <div class="row g-3">
             <form
-                th:object="${registerData}"
-                th:action="@{/users/register}"
-                th:method="POST"
+                    th:object="${registerData}"
+                    th:action="@{/users/register}"
+                    th:method="POST"
             >
                 <div>
                     <div class="col-auto">
@@ -34,16 +34,17 @@
                     <div class="col-auto">
                         <input
                                 th:field="*{username}"
+                                th:errorclass="is-invalid"
                                 name="username"
-                               required minlength="5" maxlength="20"
-                               type="text"
-                               id="inputUsername"
-                               class="form-control"
-                               aria-describedby="usernameHelpInline">
+                                type="text"
+                                id="inputUsername"
+                                class="form-control"
+                                aria-describedby="usernameHelpInline">
                         <small id="usernameError"
-                               class="invalid-feedback bg-danger rounded">Username length must be more than 3 characters</small>
+                               class="invalid-feedback bg-danger rounded">Username length must be more than 3
+                            characters</small>
 
-                        <small id="usernameUniqueError"
+                        <small th:if="${#fields.hasErrors('username')}" id="usernameUniqueError"
                                class=" bg-danger rounded">Username is already occupied</small>
 
                     </div>
@@ -55,13 +56,15 @@
                     </div>
                     <div class="col-auto">
                         <input name="fullName"
-                               required minlength="5" maxlength="20"
+                               th:field="*{fullName}"
+                               th:errorclass="is-invalid"
                                type="text"
                                id="inputFullName"
                                class="form-control"
                                aria-describedby="fullNameHelpInline">
                         <small id="fullNameError"
-                               class="invalid-feedback  form-text bg-danger rounded">Full name length must be more than 3 characters</small>
+                               class="invalid-feedback  form-text bg-danger rounded">Full name length must be more than
+                            3 characters</small>
                     </div>
                 </div>
 
@@ -71,7 +74,8 @@
                     </div>
                     <div class="col-auto">
                         <input name="email"
-								required
+                               th:field="*{email}"
+                               th:errorclass="is-invalid"
                                type="email"
                                id="inputEmail"
                                class="form-control"
@@ -85,7 +89,9 @@
                         <label for="inputAge" class="col-form-label ">Age</label>
                     </div>
                     <div class="col-auto">
-                        <input name="age" required
+                        <input name="age"
+                               th:field="*{age}"
+                               th:errorclass="is-invalid"
                                type="number"
                                id="inputAge"
                                class="form-control"
@@ -95,13 +101,31 @@
                                class="invalid-feedback  form-text bg-danger rounded">Must be valid age</small>
                     </div>
                 </div>
+
+                <div>
+                    <div class="col-auto">
+                        <label for="selectLevel" class="col-form-label ">Level</label>
+                    </div>
+                    <div class="col-auto">
+                        <select name="level"
+                               th:field="*{level}"
+                               type=""
+                               id="selectLevel"
+                                class="form-control">
+                            <option th:each="levelOption: ${levels}" th:value="${levelOption}" th:text="${levelOption}"></option>
+
+                        </select>
+                    </div>
+                </div>
+
                 <div>
                     <div class="col-auto">
                         <label for="inputPassword" class="col-form-label ">Password</label>
                     </div>
                     <div class="col-auto">
                         <input name="password"
-                                required minlength="5" maxlength="20"
+                               th:field="*{password}"
+                               th:errorclass="is-invalid"
                                type="password"
                                id="inputPassword"
                                class="form-control"
@@ -119,7 +143,8 @@
                     </div>
                     <div class="col-auto">
                         <input name="confirmPassword"
-                                required minlength="5" maxlength="20"
+                               th:field="*{confirmPassword}"
+                               th:errorclass="is-invalid"
                                type="password"
                                id="inputConfirmPassword"
                                class="form-control"

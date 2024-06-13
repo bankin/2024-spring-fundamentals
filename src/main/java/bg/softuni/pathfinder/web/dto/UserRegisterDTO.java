@@ -1,5 +1,6 @@
 package bg.softuni.pathfinder.web.dto;
 
+import bg.softuni.pathfinder.model.Level;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -8,8 +9,11 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 public class UserRegisterDTO {
     @NotBlank
+    @Size(min = 2)
     private String username;
 
     @NotEmpty
@@ -28,8 +32,9 @@ public class UserRegisterDTO {
 
     private String confirmPassword;
 
+    private Level level;
+
     public UserRegisterDTO() {
-        this.username = "DEFAULT";
     }
 
     public String getUsername() {
@@ -78,5 +83,13 @@ public class UserRegisterDTO {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 }

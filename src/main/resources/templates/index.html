@@ -1,55 +1,11 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Pathfinder</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/mobile.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-          crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-            crossorigin=""></script>
-</head>
+<head th:replace="fragments/head"></head>
 <body>
 <div class="wrapper">
     <!-- Navigation -->
-    <header>
-    <nav class="main-nav">
-        <ul>
-                <li>
-                    <a href="/">Home</a>
-                </li>
-                <li>
-                    <a href="/">Login</a>
-                </li>
-                <li>
-                    <a href="/">Register</a>
-                </li>
-                <li>
-                    <a href="/">About</a>
-                </li>
-				<li>
-                    <a href="/">Add new route</a>
-                </li>
-                <li>
-                    <a href="/">Profile</a>
-                </li>
-                <li>
-                    <a href="/">Admin</a>
-                </li>
-                <li>
-                    <a href="/">Logout</a>
-                </li>
-        </ul>
-    </nav>
-</header>
+    <header th:replace="fragments/header"></header>
     <!-- Top Container -->
     <section class="top-container">
         <div class="showcase">
@@ -71,28 +27,28 @@
 
     <!-- Boxes Section -->
     <section class="boxes">
-        <a href="/" class="main-btn" >
+        <a href="/" class="main-btn">
             <div class="box">
                 <img src="/images/pedestrian.png" height="150px" alt="">
                 <h3>Pedestrian</h3>
                 <p>Is this your Leg day?</p>
             </div>
         </a>
-        <a href="/" class="main-btn" >
+        <a href="/" class="main-btn">
             <div class="box">
                 <img src="/images/bicycle.png" height="150px" alt="">
                 <h3>Bicycle</h3>
                 <p>When you want to be one with nature!</p>
             </div>
         </a>
-        <a href="/" class="main-btn" >
+        <a href="/" class="main-btn">
             <div class="box">
                 <img src="/images/motorcycle.png" height="150px" alt="">
                 <h3>Motorcycle</h3>
                 <p>When you want the wind to blow on your face!</p>
             </div>
         </a>
-        <a href="/" class="main-btn" >
+        <a href="/" class="main-btn">
             <div class="box">
                 <img src="/images/car.png" height="150px" alt="">
                 <h3>Car</h3>
@@ -114,20 +70,17 @@
 
     <!-- Portfolio -->
     <section class="gallery">
-        <img src="http://res.cloudinary.com/ch-cloud/image/upload/v1630583467/koncyanx4gqwzt9vxgx4.jpg" width="200px" height="200px" alt="">
-        <img src="http://res.cloudinary.com/ch-cloud/image/upload/v1630582448/oowojgn4lagybkvv20jb.jpg" width="200px" height="200px" alt="">
+        <img src="http://res.cloudinary.com/ch-cloud/image/upload/v1630583467/koncyanx4gqwzt9vxgx4.jpg" width="200px"
+             height="200px" alt="">
+        <img src="http://res.cloudinary.com/ch-cloud/image/upload/v1630582448/oowojgn4lagybkvv20jb.jpg" width="200px"
+             height="200px" alt="">
     </section>
 
     <!-- <script th:src="@{/js/weather.js}"></script> -->
 </div>
 <!-- Wrapper Ends -->'
 
-<footer class="footer bg-blur rounded">
-    <div class="container-fluid text-center">
-        <div class="h5 text-white">
-            &copy; Lucho, Chocho & Spring Advanced Students 2021. All rights reserved.
-        </div>
-    </div>
+<footer th:replace="fragments/footer">
 </footer>
 </body>
 
