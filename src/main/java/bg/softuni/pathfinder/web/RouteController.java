@@ -4,11 +4,20 @@ import bg.softuni.pathfinder.model.CategoryType;
 import bg.softuni.pathfinder.model.Level;
 import bg.softuni.pathfinder.service.RouteService;
 import bg.softuni.pathfinder.service.dto.RouteShortInfoDTO;
+import bg.softuni.pathfinder.web.dto.AddRouteDTO;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -46,5 +55,25 @@ public class RouteController {
         modelAndView.addObject("categoryTypes", CategoryType.values());
 
         return modelAndView;
+    }
+
+
+    @ModelAttribute("routeData")
+    public AddRouteDTO routeData() {
+        return new AddRouteDTO();
+    }
+
+    @PostMapping("/add-route")
+    public String doAddRoute(
+        @Valid AddRouteDTO data,
+        @RequestParam("gpxCoordinates") MultipartFile file,
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
+    ) throws IOException {
+        // if (!valid) return errors
+
+        routeService.add(data, file);
+
+        return "redirect:/add-route";
     }
 }
