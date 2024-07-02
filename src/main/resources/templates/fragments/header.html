@@ -1,7 +1,8 @@
 <header th:fragment="header">
     <nav class="main-nav">
         <ul>
-            <th:block th:unless="${@currentUser.isLoggedIn()}">
+            <!--            <th:block th:unless="${@userHelperService.isAuthenticated()}">-->
+            <th:block sec:authorize="!isAuthenticated()">
                 <li>
                     <a th:href="@{/}">Home</a>
                 </li>
@@ -16,14 +17,16 @@
                 </li>
             </th:block>
 
-            <th:block th:if="${@currentUser.isLoggedIn()}">
+            <!--            <th:block th:if="${@userHelperService.isAuthenticated()}">-->
+            <th:block sec:authorize="isAuthenticated()">
                 <li>
                     <a th:href="@{/add-route}">Add new route</a>
                 </li>
                 <li>
                     <a th:href="@{/users/profile}">Profile</a>
                 </li>
-                <li th:if="${@currentUser.isAdmin()}">
+<!--                <li th:if="@userHelperService.hasRole('ADMIN')">-->
+                <li sec:authorize="hasRole('ADMIN')">
                     <a href="/">Admin</a>
                 </li>
                 <li>
@@ -35,8 +38,6 @@
                     </form>
                 </li>
             </th:block>
-
-
         </ul>
     </nav>
 </header>

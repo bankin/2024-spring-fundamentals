@@ -4,7 +4,7 @@ import bg.softuni.pathfinder.model.Level;
 import bg.softuni.pathfinder.service.UserService;
 import bg.softuni.pathfinder.web.dto.UserLoginDTO;
 import bg.softuni.pathfinder.web.dto.UserRegisterDTO;
-import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,13 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("users/register")
     public String viewRegister(Model model) {
@@ -60,19 +57,14 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("users/login-error")
+    public ModelAndView viewLoginError() {
+        ModelAndView modelAndView = new ModelAndView("login");
 
-    @PostMapping("users/login")
-    public String login(UserLoginDTO loginData) {
-        userService.login(loginData);
+        modelAndView.addObject("showErrorMessage", true);
+        modelAndView.addObject("loginData", new UserLoginDTO());
 
-        return "redirect:/";
-    }
-
-    @PostMapping("users/logout")
-    public String logout() {
-        userService.logout();
-
-        return "redirect:/";
+        return modelAndView;
     }
 
     @GetMapping("users/profile")

@@ -6,6 +6,7 @@ import bg.softuni.pathfinder.service.RouteService;
 import bg.softuni.pathfinder.service.dto.RouteShortInfoDTO;
 import bg.softuni.pathfinder.web.dto.AddRouteDTO;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,12 +25,9 @@ import java.util.List;
  * Controller to handle all things route relates
  */
 @Controller
+@RequiredArgsConstructor
 public class RouteController {
     private final RouteService routeService;
-
-    public RouteController(RouteService routeService) {
-        this.routeService = routeService;
-    }
 
     /**
      * Method to handle the listing of all routes.

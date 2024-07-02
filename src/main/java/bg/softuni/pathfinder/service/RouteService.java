@@ -1,19 +1,16 @@
 package bg.softuni.pathfinder.service;
 
 import bg.softuni.pathfinder.data.RouteRepository;
-import bg.softuni.pathfinder.data.UserRepository;
 import bg.softuni.pathfinder.model.Picture;
 import bg.softuni.pathfinder.model.Route;
 import bg.softuni.pathfinder.service.dto.RouteShortInfoDTO;
 import bg.softuni.pathfinder.web.dto.AddRouteDTO;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -25,19 +22,11 @@ import java.util.Optional;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class RouteService {
-    private UserRepository userRepository;
-    private CurrentUser currentUser;
-    private RouteRepository routeRepository;
-    private Random random;
-    private ModelMapper modelMapper;
-
-    public RouteService(RouteRepository routeRepository) {
-        this.routeRepository = routeRepository;
-
-        this.modelMapper = new ModelMapper();
-        this.random = new Random();
-    }
+    private final RouteRepository routeRepository;
+    private final Random random = new Random();
+    private final ModelMapper modelMapper;
 
     @Transactional
     public List<RouteShortInfoDTO> getAll() {
