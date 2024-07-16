@@ -40,13 +40,14 @@
                                 id="inputUsername"
                                 class="form-control"
                                 aria-describedby="usernameHelpInline">
-                        <small id="usernameError"
-                               class="invalid-feedback bg-danger rounded">Username length must be more than 3
-                            characters</small>
+                        <small th:errors="*{username}" id="usernameUniqueError"
+                               class=" bg-danger text-white rounded">Username is already occupied</small>
 
-                        <small th:if="${#fields.hasErrors('username')}" id="usernameUniqueError"
-                               class=" bg-danger rounded">Username is already occupied</small>
-
+<!--                        <th:block th:if="${#fields.hasErrors('username')}">-->
+<!--                            <small th:each="error: ${#fields.detailedErrors('username')}"-->
+<!--                                   th:text="${error.getMessage()}"-->
+<!--                                   class="bg-danger text-white rounded d-block">Username is already occupied</small>-->
+<!--                        </th:block>-->
                     </div>
                 </div>
 
@@ -62,9 +63,8 @@
                                id="inputFullName"
                                class="form-control"
                                aria-describedby="fullNameHelpInline">
-                        <small id="fullNameError"
-                               class="invalid-feedback  form-text bg-danger rounded">Full name length must be more than
-                            3 characters</small>
+                        <small th:errors="*{fullName}" id="fullNameError"
+                               class=" bg-danger text-white rounded">Username is already occupied</small>
                     </div>
                 </div>
 
@@ -80,8 +80,8 @@
                                id="inputEmail"
                                class="form-control"
                                aria-describedby="emailHelpInline">
-                        <small id="emailError"
-                               class="invalid-feedback  form-text bg-danger rounded">Must be valid email</small>
+                        <small th:errors="*{email}" id="emailError"
+                               class="invalid-feedback form-text bg-danger text-white rounded">Must be valid email</small>
                     </div>
                 </div>
                 <div>
@@ -97,8 +97,8 @@
                                class="form-control"
                                min="0" max="90"
                                aria-describedby="ageHelpInline">
-                        <small id="ageError"
-                               class="invalid-feedback  form-text bg-danger rounded">Must be valid age</small>
+                        <small th:errors="*{age}" id="ageError"
+                               class="invalid-feedback text-white form-text bg-danger rounded">Must be valid age</small>
                     </div>
                 </div>
 
@@ -108,12 +108,12 @@
                     </div>
                     <div class="col-auto">
                         <select name="level"
-                               th:field="*{level}"
-                               type=""
-                               id="selectLevel"
+                                th:field="*{level}"
+                                type=""
+                                id="selectLevel"
                                 class="form-control">
-                            <option th:each="levelOption: ${levels}" th:value="${levelOption}" th:text="${levelOption}"></option>
-
+                            <option th:each="levelOption: ${levels}" th:value="${levelOption}"
+                                    th:text="${levelOption}"></option>
                         </select>
                     </div>
                 </div>
@@ -130,8 +130,8 @@
                                id="inputPassword"
                                class="form-control"
                                aria-describedby="passwordHelpInline">
-                        <small id="passwordError"
-                               class="invalid-feedback  form-text bg-danger rounded">
+                        <small th:errors="*{password}" id="passwordError"
+                               class="invalid-feedback text-white form-text bg-danger rounded">
                             Password length must be between 5 and 20 characters and passwords should match.
                         </small>
                     </div>
@@ -149,8 +149,8 @@
                                id="inputConfirmPassword"
                                class="form-control"
                                aria-describedby="confirmPasswordHelpInline">
-                        <small id="confirmPasswordError"
-                               class="invalid-feedback  form-text bg-danger rounded">
+                        <small th:errors="*{confirmPassword}" id="confirmPasswordError"
+                               class="invalid-feedback text-white form-text bg-danger rounded">
                             Password length must be between 5 and 20 characters and passwords should match.
                         </small>
                     </div>

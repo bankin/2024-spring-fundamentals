@@ -16,21 +16,21 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserRegisterDTO {
     @NotBlank
-    @Size(min = 2)
+    @Size(min = 2, max = 200)
     private String username;
 
     @NotEmpty
-    @Size(min = 5)
+    @Size(min = 5, max = 200)
     private String fullName;
 
-    @Email
+    @Email(regexp = ".*@.*")
     private String email;
 
-    @Min(0)
+    @Min(1)
     @Max(90)
     private Integer age;
 
-    @Size(min = 5)
+    @Size(min = 5, max = 100)
     private String password;
 
     private String confirmPassword;

@@ -4,6 +4,7 @@ import bg.softuni.pathfinder.model.Level;
 import bg.softuni.pathfinder.service.UserService;
 import bg.softuni.pathfinder.web.dto.UserLoginDTO;
 import bg.softuni.pathfinder.web.dto.UserRegisterDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,10 @@ public class UserController {
 
     @GetMapping("users/register")
     public String viewRegister(Model model) {
-        model.addAttribute("registerData", new UserRegisterDTO());
+        if (!model.containsAttribute("registerData")) {
+            model.addAttribute("registerData", new UserRegisterDTO());
+        }
+
         model.addAttribute("levels", Level.values());
 
         return "register";
@@ -29,18 +33,18 @@ public class UserController {
 
     @PostMapping("users/register")
     public String doRegister(
-            UserRegisterDTO data,
+            @Valid UserRegisterDTO data,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
 
-//        if (bindingResult.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("registerData", data);
-////            redirectAttributes.addAttribute("org.springframework.validation.BindingResult.UserRegisterDTO", bindingResult);
-//
-//            // handle errors
-//            return "register";
-//        }
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("registerData", data);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerData", bindingResult);
+
+            // handle errors
+            return "redirect:register";
+        }
 
         userService.register(data);
 
