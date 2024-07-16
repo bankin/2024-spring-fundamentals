@@ -9,11 +9,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -63,15 +61,41 @@ public class RouteController {
 
     @PostMapping("/add-route")
     public String doAddRoute(
-        @Valid AddRouteDTO data,
-        @RequestParam("gpxCoordinates") MultipartFile file,
-        BindingResult bindingResult,
-        RedirectAttributes redirectAttributes
+            @Valid AddRouteDTO data,
+            @RequestParam("gpxCoordinates") MultipartFile file,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
     ) throws IOException {
         // if (!valid) return errors
 
         routeService.add(data, file);
 
         return "redirect:/add-route";
+    }
+
+    @GetMapping("route/{id}")
+    public ModelAndView addRoute(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("route-details");
+
+        modelAndView.addObject("route", routeService.getDetails(id));
+
+        return modelAndView;
+    }
+
+    @GetMapping("/routes/{category}")
+    public ModelAndView getRoutesByCategory(@PathVariable CategoryType category) {
+        String view = "";
+        switch (category){
+            case CAR -> view ="car";
+            case BICYCLE -> view ="bicycle";
+            case PEDESTRIAN -> view ="pedestrian";
+            case MOTORCYCLE -> view ="motorcycle";
+        }
+
+        ModelAndView modelAndView = new ModelAndView(view);
+
+        modelAndView.addObject("routes", routeService.getRouteByCategory(category));
+
+        return modelAndView;
     }
 }

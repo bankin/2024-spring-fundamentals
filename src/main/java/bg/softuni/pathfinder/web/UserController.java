@@ -38,6 +38,7 @@ public class UserController {
             RedirectAttributes redirectAttributes
     ) {
 
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerData", data);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerData", bindingResult);

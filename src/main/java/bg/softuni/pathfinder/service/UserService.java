@@ -29,4 +29,12 @@ public class UserService {
     public UserProfileDto getProfileData() {
         return modelMapper.map(userHelperService.getUser(), UserProfileDto.class);
     }
+
+    public boolean isUsernameUnique(String username) {
+        return userRepository.findByUsername(username).isEmpty();
+    }
+
+    public boolean isEmailUnique(String email) {
+        return !userRepository.existsByEmail(email);
+    }
 }

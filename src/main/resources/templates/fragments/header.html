@@ -1,11 +1,12 @@
 <header th:fragment="header">
     <nav class="main-nav">
         <ul>
+            <li>
+                <a th:href="@{/}">Home</a>
+            </li>
             <!--            <th:block th:unless="${@userHelperService.isAuthenticated()}">-->
             <th:block sec:authorize="!isAuthenticated()">
-                <li>
-                    <a th:href="@{/}">Home</a>
-                </li>
+
                 <li>
                     <a th:href="@{/users/login}">Login</a>
                 </li>

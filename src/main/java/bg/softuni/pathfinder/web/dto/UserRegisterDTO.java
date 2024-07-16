@@ -1,6 +1,9 @@
 package bg.softuni.pathfinder.web.dto;
 
 import bg.softuni.pathfinder.model.Level;
+import bg.softuni.pathfinder.validation.annotation.UniqueEmail;
+import bg.softuni.pathfinder.validation.annotation.UniqueUsername;
+import bg.softuni.pathfinder.validation.annotation.ValidatePasswords;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -14,9 +17,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@ValidatePasswords
 public class UserRegisterDTO {
     @NotBlank
     @Size(min = 2, max = 200)
+    @UniqueUsername
     private String username;
 
     @NotEmpty
@@ -24,6 +29,7 @@ public class UserRegisterDTO {
     private String fullName;
 
     @Email(regexp = ".*@.*")
+    @UniqueEmail
     private String email;
 
     @Min(1)

@@ -4,6 +4,8 @@
 <head th:replace="fragments/head"></head>
 <body>
 <div class="wrapper">
+    <button id="hello-world-btn"> Say hello world</button>
+
     <!-- Navigation -->
     <header th:replace="fragments/header"></header>
     <!-- Top Container -->
@@ -16,7 +18,8 @@
         <div class="top-box top-box-a">
             <h4>Времето в София</h4>
             <h4><span th:text="${sofiaTemperature}" id="box-a-temp"></span><span>&#8451;</span></h4>
-            <img id="box-a-img" src="https://static-00.iconduck.com/assets.00/sun-symbol-emoji-2048x2048-wityey4r.png" height="150px" alt="">
+            <img id="box-a-img" src="https://static-00.iconduck.com/assets.00/sun-symbol-emoji-2048x2048-wityey4r.png"
+                 height="150px" alt="">
         </div>
         <div class="top-box top-box-b">
             <h4>Времето в Созопол</h4>
@@ -27,28 +30,28 @@
 
     <!-- Boxes Section -->
     <section class="boxes">
-        <a href="/" class="main-btn">
+        <a th:href="@{/routes/PEDESTRIAN}" class="main-btn">
             <div class="box">
                 <img src="/images/pedestrian.png" height="150px" alt="">
                 <h3>Pedestrian</h3>
                 <p>Is this your Leg day?</p>
             </div>
         </a>
-        <a href="/" class="main-btn">
+        <a th:href="@{/routes/BICYCLE}" class="main-btn">
             <div class="box">
                 <img src="/images/bicycle.png" height="150px" alt="">
                 <h3>Bicycle</h3>
                 <p>When you want to be one with nature!</p>
             </div>
         </a>
-        <a href="/" class="main-btn">
+        <a th:href="@{/routes/MOTORCYCLE}" class="main-btn">
             <div class="box">
                 <img src="/images/motorcycle.png" height="150px" alt="">
                 <h3>Motorcycle</h3>
                 <p>When you want the wind to blow on your face!</p>
             </div>
         </a>
-        <a href="/" class="main-btn">
+        <a th:href="@{/routes/CAR}" class="main-btn">
             <div class="box">
                 <img src="/images/car.png" height="150px" alt="">
                 <h3>Car</h3>
@@ -59,12 +62,12 @@
 
     <!-- Info Section -->
     <section class="road">
-        <img src="/images/most-commented.jpg" alt="">
+        <img th:src="${commentedRoute.imageUrl}" alt="">
         <div>
-            <h2>The most commented route</h2>
-            <p>Read more about the most commented route and do not miss the
+            <h2 th:text="${commentedRoute.name}">The most commented route</h2>
+            <p th:text="${commentedRoute.description}">Read more about the most commented route and do not miss the
                 chance to visit it and give your opinion to help other users.</p>
-            <a href="/" class="btn">Learn More</a>
+            <a th:href="@{/route/{id}(id=${commentedRoute.id})}" class="btn">Learn More</a>
         </div>
     </section>
 
@@ -80,8 +83,25 @@
 </div>
 <!-- Wrapper Ends -->'
 
+
 <footer th:replace="fragments/footer">
 </footer>
 </body>
 
+<script>
+    const helloBtn = document.getElementById('hello-world-btn');
+    helloBtn.addEventListener('click', () => {
+
+        fetch('http://localhost:8080/api/hello-world', {
+            method: 'GET',
+            headers:
+                {
+                    "Content-Type": "application/json"
+                }
+        })
+            .then(res => res.json())
+            .then(data => console.log(data.name));
+    })
+
+</script>
 </html>
