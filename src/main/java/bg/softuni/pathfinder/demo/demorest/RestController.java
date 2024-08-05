@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class RestController {
 
     @GetMapping(value = "/api/hello-world", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getString() {
-
-        return "{ \"name\" : \"Hello World\" }";
+    public RestModel getString() {
+        return new RestModel("Hello World");
     }
 }
