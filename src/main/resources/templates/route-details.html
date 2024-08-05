@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
             integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
             crossorigin=""></script>
@@ -21,7 +23,7 @@
 <div class="wrapper">
     <header th:replace="fragments/header"></header>
 
-    <input type="hidden" name="routeId" id="routeId">
+    <!--    <input type="hidden" name="routeId" id="routeId">-->
     <div class="details-main">
         <section class="route-info text-center">
             <h4 th:text="${route.name}" id="track-name"></h4>
@@ -36,8 +38,11 @@
             </div>
             <div>
                 <h4>Choose picture</h4>
-                <form action="/" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" id="id" name="routeId">
+                <form th:action="@{/picture/upload-picture}"
+                      th:method="POST"
+                      enctype="multipart/form-data"
+                >
+                    <input type="hidden" id="id" name="routeId" th:value="${route.id}">
                     <div class="form-group">
                         <label>
                             <input type="text" name="title">
@@ -66,36 +71,50 @@
         </section>
         <section class="gallery">
             <img th:each="image: ${route.imageUrls}" class="rounded" th:src="${image}" height="100%" alt="">
-<!--            <img class="rounded" src="/images/pic1.jpg" height="100%" alt="">-->
+            <!--            <img class="rounded" src="/images/pic1.jpg" height="100%" alt="">-->
         </section>
         <section class="comments">
             <h1>Comments</h1>
+            <div id="comments">
+                <div class="form-group" th:each="comment : ${route.comments}">
+                    <h4 th:text="${comment.content}">Comment</h4>
+                    <label th:text="${comment.authorName}">Author</label>
+
+                    <form th:action="@{/comments/delete/{routeId}/{id} (id=${comment.id}, routeId=${route.id})}"
+                          th:method="POST">
+                        <button type="submit" class="btn btn-danger" th:text="Delete"></button>
+                    </form>
+                </div>
+            </div>
+
 
             <div>
                 <!-- Comments submission -->
-                <form id="commentForm" method="POST"
-                      action="/">
-                    <div class="form-group">
-                        <h4>Leave a comment</h4>
-                        <label for="message">Message</label>
-                        <textarea name="message"
-                                  id="message"
-                                  cols="30"
-                                  rows="5"
-                                  class="form-control"
-                                  style="background-color: white;"></textarea>
-                        <small id="messageError" class="invalid-feedback">
-                            Message should be at least 10 characters.
-                        </small>
-                    </div>
+                <!--                <form id="commentForm"-->
+                <!--                      th:method="POST"-->
+                <!--                      th:action="@{/comments/create}">-->
+                <div class="form-group">
+                    <input type="hidden" name="routeId" id="routeId" th:value="${route.id}">
+                    <h4>Leave a comment</h4>
+                    <label for="message">Message</label>
+                    <textarea name="message"
+                              id="message"
+                              cols="30"
+                              rows="5"
+                              class="form-control"
+                              style="background-color: white;"></textarea>
+                    <small id="messageError" class="invalid-feedback">
+                        Message should be at least 10 characters.
+                    </small>
+                </div>
 
-                    <div class="form-group">
-                        <input type="submit"
-                               class="btn"
-                               id="postComment"
-                               value="Post Comment"/>
-                    </div>
-                </form>
+                <div class="form-group">
+                    <input type="submit"
+                           class="btn"
+                           id="postComment"
+                           value="Post Comment"/>
+                </div>
+                <!--                </form>-->
                 <!-- Comments submission -->
             </div>
 
@@ -112,7 +131,68 @@
     <script th:src="@{/js/track.js}"></script>
     <script th:src="@{/js/comments.js}"></script>
     -->
+    <script th:src="@{/js/comments.js}"></script>
 </div>
 <footer th:replace="fragments/footer"></footer>
+
+<script>
+    const routeId = document.getElementById('routeId').value;
+
+    fetch(`http://localhost:8080/api/routes/coordinates/${routeId}`)
+        .then(res => res.json())
+        .then(coordinates => {
+            const xCoordinates = coordinates.map(xAndY => xAndY[0]);
+            const minX = Math.min(...xCoordinates);
+            const maxX = Math.max(...xCoordinates);
+
+            const yCoordinates = coordinates.map(xAndY => xAndY[1]);
+            const minY = Math.min(...yCoordinates);
+            const maxY = Math.max(...yCoordinates);
+
+            const middleX = (minX + maxX) / 2;
+            const middleY = (minY + maxY) / 2;
+
+
+
+            mapboxgl.accessToken = 'pk.eyJ1IjoidmV4ZWZhOTY3MCIsImEiOiJjbHpndXA3bm8xbTlyMmlzODZuM2N2cmJzIn0.JBMcBPPxHtO5SwZa6A0owg';
+            const map = new mapboxgl.Map({
+                container: 'map',
+                // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+                style: 'mapbox://styles/mapbox/streets-v12',
+                center: [middleX, middleY],
+                zoom: 11
+            });
+
+            map.on('load', () => {
+                map.addSource('route', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'properties': {},
+                        'geometry': {
+                            'type': 'LineString',
+                            'coordinates': coordinates
+                        }
+                    }
+                });
+                map.addLayer({
+                    'id': 'route',
+                    'type': 'line',
+                    'source': 'route',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': '#888',
+                        'line-width': 8
+                    }
+                });
+            });
+        })
+
+
+
+</script>
 </body>
 </html>

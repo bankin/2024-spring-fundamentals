@@ -5,6 +5,7 @@ import bg.softuni.pathfinder.model.Level;
 import bg.softuni.pathfinder.service.RouteService;
 import bg.softuni.pathfinder.service.dto.RouteShortInfoDTO;
 import bg.softuni.pathfinder.web.dto.AddRouteDTO;
+import bg.softuni.pathfinder.web.dto.UploadPictureDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -74,7 +75,7 @@ public class RouteController {
     }
 
     @GetMapping("route/{id}")
-    public ModelAndView addRoute(@PathVariable Long id) {
+    public ModelAndView details(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("route-details");
 
         modelAndView.addObject("route", routeService.getDetails(id));

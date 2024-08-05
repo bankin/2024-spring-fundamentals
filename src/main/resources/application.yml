@@ -33,11 +33,6 @@ spring:
         show_sql: true
         format_sql: true
     defer-datasource-initialization: true
-#Cloudinary Properties
-#cloudinary:
-  #api-key:
-  #api-secret:
-  #cloud-name:
   thymeleaf:
     check-template-location: true
     cache: false
@@ -45,3 +40,10 @@ spring:
     resources:
       static-locations: file:./src/main/resources/static/
       cache-period: 0
+#Cloudinary Properties
+cloudinary:
+  api-key: 251778146881744
+  api-secret: zTfThs42MeH1Mv8ke4g19Etg5Ck
+  cloud-name: dwquql4ef
+gpx-coordinates:
+  migrate: false

@@ -1,6 +1,7 @@
 package bg.softuni.pathfinder.service.dto;
 
 import bg.softuni.pathfinder.model.Level;
+import bg.softuni.pathfinder.web.dto.CreateCommentDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,4 +19,5 @@ public class RouteDetailsDTO {
     private String videoUrl;
     private String authorName;
     private List<String> imageUrls;
+    private List<RouteDetailsCommentDTO> comments;
 }

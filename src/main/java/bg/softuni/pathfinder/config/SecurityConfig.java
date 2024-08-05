@@ -19,7 +19,7 @@ public class SecurityConfig {
                             authorizeRequest
                                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                     .requestMatchers("/", "/users/login", "/users/login-error", "/users/register", "/about").permitAll()
-                                    .requestMatchers("/api/hello-world").permitAll()
+                                    .requestMatchers("/api/hello-world", "/api/comments/").permitAll()
                                     .anyRequest().authenticated();
                         }
                 )

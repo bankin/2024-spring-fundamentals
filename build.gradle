@@ -34,6 +34,13 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44
+    implementation 'com.cloudinary:cloudinary-http44:1.39.0'
+    // https://mvnrepository.com/artifact/com.cloudinary/cloudinary-taglib
+    implementation 'com.cloudinary:cloudinary-taglib:1.39.0'
+
+    implementation 'io.jenetics:jpx:3.1.0'
+
     runtimeOnly 'com.mysql:mysql-connector-j'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
